@@ -10,11 +10,19 @@ import CoreMotion
 
 class ViewController: UIViewController {
     
-    var motionManager = CMMotionManager()
+    var motionManager: CMMotionManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        motionManager = CMMotionManager()
+        motionManager.startAccelerometerUpdates()
+        
+        if let accelerometerData = motionManager.accelerometerData {
+            physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.y * -50, dy: accelerometerData.acceleration.x * 50)
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool)
